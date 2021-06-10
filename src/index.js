@@ -11,7 +11,7 @@ function App() {
   const chart = useRef();
   const resizeObserver = useRef();
   const series = useRef();
-  const [tokenAddress, setTokenAddress] = useState('0xd7730681b1dc8f6f969166b29d8a5ea8568616a3');
+  const [tokenAddress, setTokenAddress] = useState('0xbf5140a22578168fd562dccf235e5d43a02ce9b1');
 
   useEffect(() => {
     chart.current = createChart(chartContainerRef.current, {
@@ -71,13 +71,14 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log('current token address: ', tokenAddress);
     ohlc(tokenAddress).then(function (response) {
       console.log('Response:', response)
 
       if (response?.data?.data?.ethereum?.dexTrades) {
         const candles = response.data.data.ethereum.dexTrades.map(function (candle) {
           return {
-            time: candle.timeInterval?.minute,
+            time: candle.timeInterval?.day,
             open: Number(candle.open),
             high: Number(candle.high),
             low: Number(candle.low),

@@ -11,7 +11,7 @@ function App() {
   const chart = useRef();
   const resizeObserver = useRef();
   const series = useRef();
-  const [tokenAddress, setTokenAddress] = useState('0xbf5140a22578168fd562dccf235e5d43a02ce9b1');
+  const [tokenAddress, setTokenAddress] = useState('0x86dd49963fe91f0e5bc95d171ff27ea996c0890c');
 
   useEffect(() => {
     chart.current = createChart(chartContainerRef.current, {
@@ -36,7 +36,16 @@ function App() {
         borderColor: '#485c7b',
       },
       timeScale: {
-        borderColor: '#485c7b',
+        rightOffset: 12,
+        barSpacing: 3,
+        fixLeftEdge: true,
+        lockVisibleTimeRangeOnResize: false,
+        rightBarStaysOnScroll: true,
+        borderVisible: false,
+        borderColor: '#fff000',
+        visible: true,
+        timeVisible: true,
+        secondsVisible: false,
       },
     });
 
@@ -71,14 +80,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log('current token address: ', tokenAddress);
     ohlc(tokenAddress).then(function (response) {
       console.log('Response:', response)
 
       if (response?.data?.data?.ethereum?.dexTrades) {
         const candles = response.data.data.ethereum.dexTrades.map(function (candle) {
           return {
-            time: candle.timeInterval?.day,
+            time: candle.timeInterval.day,
             open: Number(candle.open),
             high: Number(candle.high),
             low: Number(candle.low),

@@ -86,7 +86,7 @@ function App() {
       if (response?.data?.data?.ethereum?.dexTrades) {
         const candles = response.data.data.ethereum.dexTrades.map(function (candle) {
           return {
-            time: candle.timeInterval.day,
+            time: new Date(candle.timeInterval.minute).getTime()/1000,
             open: Number(candle.open),
             high: Number(candle.high),
             low: Number(candle.low),

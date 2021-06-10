@@ -24,13 +24,13 @@ const query = `
 query ($token: String) {
   ethereum(network: bsc) {
     dexTrades(
-      options: {asc: "timeInterval.day"}
+      options: {asc: "timeInterval.minute"}
       baseCurrency: {is: $token}
       quoteCurrency: {is: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"}
       tradeAmountUsd: {gt: 10}
     ) {
       timeInterval {
-        day
+        minute(count: 15)
       }
       high: quotePrice(calculate: maximum)
       low: quotePrice(calculate: minimum)
